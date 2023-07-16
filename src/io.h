@@ -16,3 +16,4 @@ inline void Create_Storage() {
   outfile.write(reinterpret_cast<char *>(buffer), 1920);
   outfile.close();
 }
+
