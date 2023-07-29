@@ -1,7 +1,7 @@
 #include"trans.h"
-#include "build_in_command.h"
+#include "build_in_function.h"  
 using namespace std;
-extern uc memory;
+extern uc memory[];
     uc command[7];
 inline void run(), run_debug(),run_command();
 inline  void run_program(bool is_debug_mode){
@@ -9,14 +9,17 @@ inline  void run_program(bool is_debug_mode){
     else{run();}
 }
 inline void run(){
+    int n=0;//内存指针
     command_start:
-    for(int i = 0; i < 7; i++) command[i] = memory[i];
-    if is_not_command(command[0]){//判断是否为命令
+    
+    for(int i = 0; i < 7; i++) command[i] = memory[i+n];
+    if (is_not_command(command[0])){//判断是否为命令
         cout << "Error: Invalid command!\n";
         return;
     }
     
     run_command();//command是全局变量不用传参
+    n+=7;
     goto command_start;
     
 }
@@ -25,6 +28,7 @@ inline void run_debug(){
 }
 
 inline void run_command() {
+    address_trans();
     switch (command[0]) {
         case 0x10: add(); break;//均在build_
         case 0x11: sub(); break;

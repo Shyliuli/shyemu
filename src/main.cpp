@@ -1,7 +1,4 @@
-#include "io.h"
 #include "run.h"
-#include <sched.h>
-
 uc storage[1920];
 uc memory[0xF800];
 uc shy_register[16];
