@@ -1,4 +1,8 @@
 #include "memorylist.h" // 包含必要的头文件
+using std::cout;
+using std::cin;
+using std::endl;
+
 
 extern std::vector<unsigned short> address;
 
@@ -89,7 +93,7 @@ inline void nota(unsigned short addr1,unsigned short addr2) {
 
 // 位运算非函数，接受一个地址和一个数字参数，将这个数字进行非运算，结果存储在这个地址中。
 inline void notn(unsigned short addr1,unsigned short num1) {
-    address[addr1] = num1;
+    address[addr1] = ~num1;
 }
 
 // 位运算异或函数，接受两个地址参数，将这两个地址中的值进行异或运算，结果存储在第一个地址中。
@@ -164,12 +168,12 @@ inline void smaequn(unsigned short addr1, unsigned short num1) {
     tmp = (address[addr1] <= num1) ? 1 : 0;
 }
 
-// 设置函数，接受两个地址参数，将第二个地址中的值设置为第一个地址中的值。
+// 赋值函数，接受两个地址参数，将第二个地址中的值赋值为第一个地址中的值。
 inline void seta(unsigned short addr1, unsigned short addr2) {
     address[addr1] = address[addr2];
 }
 
-// 设置函数，接受两个数字参数，将第二个数字设置为第一个地址中的值。
+// 赋值函数，接受两个数字参数，将第二个数字赋值为第一个地址中的值。
 inline void setn(unsigned short num1, unsigned short num2) {
     address[num1] = num2;
 }
@@ -198,15 +202,18 @@ inline void outaasc(unsigned short addr1, unsigned short addr2) {
     if (address[addr1] <= 128) {
     cout<<(char)address[addr1];
 }
-    else
+    else{
     cout<<"你在试图输出一个ascii,但是输出值大于128！！！";//中文
     cout<<"You are trying to output an ascii, but the output value is greater than 128!!!";//English
 }
+}
+
 inline void outnasc(unsigned short num1, unsigned short num2) {
     if (num1 <= 128) {
     cout<<(char)num1;
 }
-    else
+    else{
     cout<<"你在试图输出一个ascii,但是输出值大于128！！！";//中文
     cout<<"You are trying to output an ascii, but the output value is greater than 128!!!";//English
+}
 }

@@ -1,17 +1,18 @@
 #include "buildin_function.h"
-inline unsigned short addrtype(unsigned short addr1)
-{
-    unsigned short addr_type;
-
-    if (addr1 >= 0x00 && addr1 <= 0x0F)
-        addr_type = 0; // 寄存器
-    else if (addr1 >= 0x10 && addr1 <= 0x50)
-        addr_type = 1; // 保留空间
-    else if (addr1 >= 0x36 && addr1 <= 0xFFFF)
-        addr_type = 2; // 内存
-
-    return addr_type;
+unsigned short addrtrans(unsigned short addr1, unsigned short times) {
+    for (unsigned short i = 0; i < times; ++i) {
+        // 检查索引是否越界
+        if (addr1 >= address.size()) {
+            std::cerr << "Index out of bounds: " << addr1 << std::endl;
+            return 0;  // 或者其他错误处理
+        }
+        // 使用当前值作为下一个索引
+        addr1 = address[addr1];
+    }
+    return addr1;
 }
+
+
 // 错误处理函数
 inline void error()
 {
@@ -31,20 +32,6 @@ inline void error()
 // 根据输入的地址类型调用相应的函数
 inline void run(unsigned short input1, unsigned short input2, unsigned short input3)
 {
-    unsigned short input_type1 = addrtype(input1);
-    unsigned short input_type2 = addrtype(input2);
-    unsigned short input_type3 = addrtype(input3);
-
-    // 检查参数类型是否符合要求
-    if (input_type1 != 1 || input_type2 == 1 || input_type3 == 1)
-    {
-        // 输出参数错误
-        std::cerr << "Error: Invalid parameter types." << std::endl;
-        // 调用错误处理函数
-        error();
-        // 退出程序
-        std::exit(EXIT_FAILURE);
-    }
     // 定义函数指针类型
     typedef void (*BinaryFunc)(unsigned short, unsigned short);
 
@@ -58,9 +45,9 @@ inline void run(unsigned short input1, unsigned short input2, unsigned short inp
         equn,biga,bign, bigequa,bigequn, smaa,sman,smaequa,smaequn,seta,setn, ina,inn, outa,outn,outaasc,outnasc};
 
     // 按照函数编号调用对应函数
-    if (input1 >= ADDA_FUNC && input1 <= OUTN_FUNC)
+    if (input1 >= ADDA_FUNC && input1 <= OUTNASC_FUNC)
     {
-        binaryFunctions[input1 - ADDA_FUNC](input2, input3);
+        binaryFunctions[(input1 - ADDA_FUNC)-1](input2, input3);
     } 
     else
     {
@@ -74,3 +61,29 @@ inline void run(unsigned short input1, unsigned short input2, unsigned short inp
      内建函数编号从0x10开始*/
 }
 
+
+
+
+inline void run_program() {
+    unsigned short index = CODE_FROM;
+    while (true) {
+        // 检查是否有足够的元素来进行后续操作
+        if (index + 4 >= address.size()) {
+            std::cerr << "Insufficient elements for operation at index " << index << std::endl;
+            break;
+        }
+
+        // 检查 address[index] 是否为0
+        if (address[index] == 0) {
+            break;
+        }
+
+        // 运行 run 函数
+        run(address[index],
+            addrtrans(address[index + 1], address[index + 2]),
+            addrtrans(address[index + 3], address[index + 4]));
+
+        // 更新 index
+        index += 5;
+    }
+}

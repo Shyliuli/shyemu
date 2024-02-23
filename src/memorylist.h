@@ -4,9 +4,9 @@
 //头文件保护
 #include<vector>
 #include<iostream>
-using namespace std;
+
 #define MAX 0xFFFF
-#define CODE_FROM 0x50
+#define CODE_FROM 0x2000
 // 内建函数编号从0x10开始
 #define ADDA_FUNC 0x10
 #define ADDN_FUNC 0x11
@@ -62,7 +62,7 @@ using namespace std;
 #define lx 0x0C
 #define mx 0x0D
 #define pc address[0x0D]//mx是Program Counter，程序计数器
-#define nx 0x0E
+#define nx 0x0E//不是0就退出程序
 #define ox 0x0F//寄存器对应
 #define tmp address[0x0F]//ox存储临时结果
 
