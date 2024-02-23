@@ -41,7 +41,7 @@ inline void run(unsigned short input1, unsigned short input2, unsigned short inp
     // 反正我写不出来
     BinaryFunc binaryFunctions[] = {
         adda, addn, suba, subn, mula, muln, diva, divn,
-        lsa, lsn, lra, lrn, anda, andn, ora, orn, nota, notn, xora,xorn, jmpn, equa,
+        lsa, lsn, lra, lrn, anda, andn, ora, orn, nota, notn, xora,xorn, jmpa,jmpn, equa,
         equn,biga,bign, bigequa,bigequn, smaa,sman,smaequa,smaequn,seta,setn, ina,inn, outa,outn,outaasc,outnasc};
 
     // 按照函数编号调用对应函数

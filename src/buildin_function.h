@@ -108,14 +108,19 @@ inline void xorn(unsigned short addr1,unsigned short num1) {
 
 // 跳转函数，如果 `tmp` 为1，将程序计数器（`pc`）设置为第一个地址中的值。
 inline void jmpa(unsigned short addr1,unsigned short addr2) {
-    if(tmp == 1)
+    if(tmp == 1){
         pc = address[addr1];
+        tmp=0;
+    }
+    
 }
 
 // 跳转函数，如果 `tmp` 为1，将程序计数器（`pc`）设置为第一个数字参数。
 inline void jmpn(unsigned short num1,unsigned short num2) {
-    if(tmp == 1)
+    if(tmp == 1){
         pc = num1;
+        tmp=0;
+    }            
 }
 
 // 等于比较函数，接受两个地址参数，如果这两个地址中的值相等，就将 `tmp` 设置为1，否则设置为0。
